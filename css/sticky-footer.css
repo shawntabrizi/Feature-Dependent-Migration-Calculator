@@ -29,3 +29,7 @@ body {
 .container .text-muted {
   margin: 20px 0;
 }
+
+.table-condensed {
+    font-size: 10px;
+}

@@ -49,6 +49,7 @@ function readFile() {
         data = $.csv.toObjects(reader.result)
         countTotal()
         updateKey()
+        calculateFeatureOrder()
         updatePage()
     };
     // start reading the file. When it is done, calls the onload event defined above.
@@ -59,8 +60,8 @@ function updateKey() {
     var key = '';
     for (var item in data[0]) {
         //ignore metadata rows
-        keyobj[item] = 1;
         if (data[0][item] == 'True' || data[0][item] == 'False') {
+            keyobj[item] = 1;
             key += '<input type="checkbox" name="' + item + '" value="' + item + '" checked> '
             key += item + "<br>\r\n"
         }
@@ -82,7 +83,7 @@ function updateTableAndCount() {
     var table = '';
     var count = 0;
     table += '<tr>\r\n';
-    for (var header in keyobj) {
+    for (var header in data[0]) {
         table += '<th>' + header + '</th>\r\n';
     }
     table += '</tr>\r\n'
@@ -99,7 +100,7 @@ function updateTableAndCount() {
         //style table based on row being good
         if (isgood) {
             count += 1;
-            table += '<tr class="alert-success">\r\n';
+            table += '<tr class="success">\r\n';
         }
         else {
             table += '<tr">\r\n';
@@ -124,6 +125,74 @@ $(document).on('change', '#key input[type=checkbox]', function () {
     }
     updatePage()
 })
+
+function calculateFeatureOrder()
+{
+    //This function will go through each key, and figure out which one has the smallest number of dependent rows
+    //it will then remove those rows and key from the list, and repeat till there are no keys
+    //we keep track of the order in which we remove the keys which then gives us a feature order
+    var datacopy = data.slice()
+    var keytracker = [];
+    for (var item in keyobj) {
+        //First element is the coloumn/key name, second element is count
+        keytracker.push([item, 0])
+    }
+
+    var keyorder = [];
+    while (keytracker.length > 0) {
+        for (var n in keytracker) {
+            for (var row in datacopy) {
+                var item = keytracker[n][0];
+                if (datacopy[row][item] == 'True') {
+                    //this is keeping a count of items
+                    keytracker[n][1] += 1;
+                }
+            }
+        }
+        //sort by smallest number of items
+        keytracker.sort(compareSecondCol)
+        //add smallest to order first
+        keyorder.push(keytracker[0][0])
+        //remove all rows with that requirement since we are doing it "last"
+        for (var row in datacopy) {
+            if (datacopy[row][keytracker[0][0]] == 'True') {
+                datacopy.splice(row, 1)
+            }
+        }
+        //remove that item from the tracker
+        keytracker.splice(0, 1)
+    }
+
+    var html = "<h4>Suggested Feature Order</h4>\r\n"
+    html += "<ol>\r\n"
+    keyorder.reverse()
+    for (var item in keyorder) {
+        html += "<li>" + keyorder[item] + "</li>\r\n"
+    }
+    html += "</ol>\r\n"
+
+    //commenting out the alternate feature order
+    /*
+    var keyorder2 = calculateFeatureOrder2()
+    html += "<h4>Alternate Feature Order</h4>\r\n"
+    html += "<ol>\r\n"
+    for (var item in keyorder2) {
+        alert(keyorder2[item][0])
+        html += "<li>" + keyorder2[item][0] + "</li>\r\n"
+    }
+    html += "</ol>\r\n"
+    */
+    document.getElementById('featureOrder').innerHTML = html;
+}
+
+function compareSecondCol(a, b) {
+    if (a[1] === b[1]) {
+        return 0;
+    }
+    else {
+        return (a[1] < b[1]) ? -1 : 1;
+    }
+}
 
 //Old Functions, not used
 function countProgress() {
@@ -167,4 +236,23 @@ function updateSelected() {
         out += item + ": " + keyobj[item] + "<br>\r\n"
     }
     document.getElementById('selected').innerHTML = out
+}
+
+function calculateFeatureOrder2() {
+    var keytracker = []
+    for (var item in keyobj) {
+        keytracker.push([item, 0])
+    }
+
+    for (var n in keytracker) {
+        var item = keytracker[n][0]
+        for (var row in data) {
+            if (data[row][item] == 'True') {
+                keytracker[n][1] += 1;
+            }
+        }
+    }
+
+    keytracker.sort(compareSecondCol)
+    return keytracker.reverse()
 }
