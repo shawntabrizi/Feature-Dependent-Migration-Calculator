@@ -58,6 +58,7 @@ function readFile() {
 
 function updateKey() {
     var key = '';
+    key += '<a href="javascript:;" onClick="select_all()">Select All</a> | <a href="javascript:;" onClick="select_none()">Select None</a><br>'
     for (var item in data[0]) {
         //ignore metadata rows
         if (data[0][item] == 'True' || data[0][item] == 'False') {
@@ -126,8 +127,7 @@ $(document).on('change', '#key input[type=checkbox]', function () {
     updatePage()
 })
 
-function calculateFeatureOrder()
-{
+function calculateFeatureOrder() {
     //This function will go through each key, and figure out which one has the smallest number of dependent rows
     //it will then remove those rows and key from the list, and repeat till there are no keys
     //we keep track of the order in which we remove the keys which then gives us a feature order
@@ -192,6 +192,22 @@ function compareSecondCol(a, b) {
     else {
         return (a[1] < b[1]) ? -1 : 1;
     }
+}
+
+function select_all() {
+    $('#key input[type=checkbox]').each(function () {
+        $(this).attr('checked', true)
+        keyobj[$(this).attr('name')] = 1
+    })
+    updatePage()
+}
+
+function select_none() {
+    $('#key input[type=checkbox]').each(function () {
+        $(this).attr('checked', false)
+        keyobj[$(this).attr('name')] = 0
+    })
+    updatePage()
 }
 
 //Old Functions, not used
