@@ -21,8 +21,8 @@ Notes
 
 Note that there are two ways to observe data using this page:
 
-    Starting with everything selected, and then removing features to see the density of the population dependent on those features. (default)
-    Starting with nothing selected, and then adding features to see the number you would be able to migrate if you implemented those features.
+1. Starting with everything selected, and then removing features to see the density of the population dependent on those features. (default)
+2. Starting with nothing selected, and then adding features to see the number you would be able to migrate if you implemented those features.
 
 With the example data, starting with everything selected, and removing water, you will see that a huge density of the birds would be unable to migrate. So clearly this is an important feature.
 
