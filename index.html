@@ -4,23 +4,19 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="An application for calculating the dependency of migration based on certian limiting features.">
     <meta name="author" content="Shawn Tabrizi">
     <title>Feature Dependent Migration Calculator</title>
+    
     <!-- Bootstrap core CSS -->
-    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    
     <!-- Custom styles for this template -->
-    <link href="css/sticky-footer.css" rel="stylesheet">
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <link href="feature_calculator.css" rel="stylesheet">
 </head>
 <body>
     <!-- Begin page content -->
-    <div class="container">
+    <div class="container-fluid">
         <div class="page-header">
             <h1>Feature Dependent Migration Calculator</h1>
         </div>
@@ -40,7 +36,7 @@
                     <p>Your goal is to create a super-cage which can hold them all.</p>
                     <p>To do this, you must track all the different needs of these birds, and what features your cage currently has. As you add a feature to the cage, some subset of birds should be able to move into the cage.</p>
                     <p>Looking at the data from this perspective may help you decide which features are most important and will affect the most birds.</p>
-                    <a href="birds.csv" download="birds.csv" class="btn btn-default" role="button">Download Example Data</a>
+                    <a href="birds.csv" download="birds.csv" class="btn btn-outline-primary" role="button">Download Example Data</a>
                     <h3>Notes</h3>
                     <p>Note that there are two ways to observe data using this page:</p>
                     <ol>
@@ -50,7 +46,6 @@
                     <p>With the example data, starting with everything selected, and removing water, you will see that a huge density of the birds would be unable to migrate. So clearly this is an important feature.</p>
                     <p>However, if you start with no features selected, and then just select water, you will see again that almost no birds can migrate, because many of them have additional dependencies.</p>
                     <p>You will need to use both perspectives to make decisions about the most important features required for migration. Play around and see!</p>
-                    
                 </div>
                 <h2 id="percent"></h2>
                 <div id="featureOrder"></div>
@@ -67,13 +62,21 @@
     </div>
     <footer class="footer">
         <div class="container">
-            <p class="text-muted">Created by Shawn Tabrizi  -  June 2017 - using <a href="https://github.com/evanplaice/jquery-csv">JQuery CSV</a> and <a href="https://github.com/chartjs/Chart.js">Chart.JS</a>  -  <a href="https://msaonboarding.blob.core.windows.net/analysis/v1_v2_feature_parity_analysis.html">inspired</a> by <a href="https://github.com/dstrockis">Danny Strockis</a></p>
+            <p class="text-muted">Created by <a href="http://shawntabrizi.com">Shawn Tabrizi</a>  -  June 2017 - using <a href="https://github.com/evanplaice/jquery-csv">JQuery CSV</a> and <a href="https://github.com/chartjs/Chart.js">Chart.JS</a>  -  <a href="https://msaonboarding.blob.core.windows.net/analysis/v1_v2_feature_parity_analysis.html">inspired</a> by <a href="https://github.com/dstrockis">Danny Strockis</a></p>
         </div>
     </footer>
+    <!-- Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    
+    <!-- Chart JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 
-    <script src="http://code.jquery.com/jquery-1.8.2.js"></script>
-    <script src="js/jquery.csv.js"></script>
-    <script src="js/Chart.bundle.js"></script>
-    <script src="js/feature_parity_analysis.js"></script>
+    <!-- JQuery CSV -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-csv/0.8.8/jquery.csv.min.js"></script>
+
+    <!--Custom JS-->
+    <script src="feature_calculator.js"></script>
 </body>
 </html>

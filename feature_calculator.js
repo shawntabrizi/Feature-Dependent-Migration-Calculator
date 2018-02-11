@@ -2,7 +2,6 @@ var fileInput = document.getElementById("csv"), readFile;
 var data;
 var keyobj;
 var chartdata = [0, 0];
-
 var ctx = document.getElementById("myChart").getContext('2d');
 
 var myChart = new Chart(ctx, {
@@ -66,7 +65,6 @@ function updateKey() {
             key += '<input type="checkbox" name="' + item + '" value="' + item + '" checked> '
             key += item + "<br>\r\n"
         }
-
     }
     document.getElementById('key').innerHTML = key
 }
@@ -97,11 +95,10 @@ function updateTableAndCount() {
                 break;
             }
         }
-
         //style table based on row being good
         if (isgood) {
             count += 1;
-            table += '<tr class="success">\r\n';
+            table += '<tr class="table-success">\r\n';
         }
         else {
             table += '<tr">\r\n';
@@ -116,7 +113,6 @@ function updateTableAndCount() {
 };
 
 fileInput.addEventListener('change', readFile);
-
 $(document).on('change', '#key input[type=checkbox]', function () {
     if ($(this).is(':checked')) {
         keyobj[$(this).attr('name')] = 1;
@@ -137,7 +133,6 @@ function calculateFeatureOrder() {
         //First element is the coloumn/key name, second element is count
         keytracker.push([item, 0])
     }
-
     var keyorder = [];
     while (keytracker.length > 0) {
         for (var n in keytracker) {
@@ -162,7 +157,6 @@ function calculateFeatureOrder() {
         //remove that item from the tracker
         keytracker.splice(0, 1)
     }
-
     var html = "<h4>Suggested Feature Order</h4>\r\n"
     html += "<ol>\r\n"
     keyorder.reverse()
@@ -170,7 +164,6 @@ function calculateFeatureOrder() {
         html += "<li>" + keyorder[item] + "</li>\r\n"
     }
     html += "</ol>\r\n"
-
     //commenting out the alternate feature order
     /*
     var keyorder2 = calculateFeatureOrder2()
@@ -224,7 +217,6 @@ function countProgress() {
         if (isgood) {
             count += 1;
         }
-
     }
     chartdata[0] = count;
 }
@@ -259,7 +251,6 @@ function calculateFeatureOrder2() {
     for (var item in keyobj) {
         keytracker.push([item, 0])
     }
-
     for (var n in keytracker) {
         var item = keytracker[n][0]
         for (var row in data) {
@@ -268,7 +259,6 @@ function calculateFeatureOrder2() {
             }
         }
     }
-
     keytracker.sort(compareSecondCol)
     return keytracker.reverse()
 }
